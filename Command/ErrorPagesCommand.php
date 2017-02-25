@@ -29,6 +29,16 @@ class ErrorPagesCommand extends ContainerAwareCommand
     protected $path;
 
     /**
+     * @var string
+     */
+    protected $destinationPath;
+
+    /**
+     * @var string
+     */
+    protected $sourcePath;
+
+    /**
      * @var bool
      */
     protected $relative;
@@ -57,7 +67,7 @@ class ErrorPagesCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_OPTIONAL,
                 "The string of the path to the target directory. Optional. Defaults to 'app/Resources''",
-                'app/Resources'
+                'app/Resources/'
             )
             ->addOption(
                 'relative',
@@ -106,7 +116,9 @@ class ErrorPagesCommand extends ContainerAwareCommand
     protected function setProperties(
         InputInterface $input
     ) {
-        $this->path = $input->getOption('path') . '/TwigBundle';
+        $this->path = $input->getOption('path');
+        $this->destinationPath = $this->path . '/TwigBundle';
+        $this->sourcePath = '../../vendor/brookinsconsulting/bcerrorpagesbundle/BrookinsConsulting/BcErrorPagesBundle/Resources/TwigBundle';
 
         // Detect installation method: relative, absolute, copy
         if($this->relative === true && $this->absolute === true) {
@@ -140,9 +152,11 @@ class ErrorPagesCommand extends ContainerAwareCommand
         // Get filesystem object
         $fs = new Filesystem();
         $result = false;
+        $destinationPath = $this->destinationPath;
+        $sourcePath = $this->sourcePath;
 
         // Test if designation path already exists
-        if ($fs->exists($this->path))
+        if ($fs->exists($destinationPath))
         {
             $output->writeln("Failure! Destination path already exists. Template copies or symlinks -not- installed");
         } else {
@@ -150,7 +164,7 @@ class ErrorPagesCommand extends ContainerAwareCommand
             if ($this->relative) {
                 $output->writeln("Installing using relative symlink");
                 try {
-                    $fs->symlink('vendor/brookinsconsulting/bcerrorpagesbundle/Resources/TwigBundle', $this->path, true);
+                    $fs->symlink($sourcePath, $destinationPath, true);
                     $output->writeln("Success! Relative symlink installed");
                     $result = true;
                 } catch (IOExceptionInterface $e) {
@@ -159,7 +173,7 @@ class ErrorPagesCommand extends ContainerAwareCommand
             } elseif ($this->absolute) {
                 $output->writeln("Installing using absolute symlink");
                 try {
-                    $fs->symlink('vendor/brookinsconsulting/bcerrorpagesbundle/Resources/TwigBundle', $this->path, true);
+                    $fs->symlink($sourcePath, $destinationPath, true);
                     $output->writeln("Success! Absolute symlink installed");
                     $result = true;
                 } catch (IOExceptionInterface $e) {
@@ -168,7 +182,7 @@ class ErrorPagesCommand extends ContainerAwareCommand
             } elseif ($this->copy) {
                 $output->writeln("Installing using copies of templates");
                 try {
-                    $fs->mirror('vendor/brookinsconsulting/bcerrorpagesbundle/Resources/TwigBundle', $this->path, array( 'override' => true, 'copyonwindows' => true ));
+                    $fs->mirror($sourcePath, $destinationPath, array( 'override' => true, 'copyonwindows' => true ));
                     $output->writeln("Success! Template copies installed");
                     $result = true;
                 } catch (IOExceptionInterface $e) {

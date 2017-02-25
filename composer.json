@@ -16,20 +16,28 @@
     "require": {
         "php": ">=5.6.0",
         "symfony/symfony": "3.2.*",
-        "symfony/filesystem": "*"
+        "symfony/filesystem": "^3.2"
     },
-    "autoload" : {
-        "psr-0" : {
-            "BrookinsConsulting\\BcErrorPagesBundle" : ""
+    "autoload": {
+        "psr-0": {
+            "BrookinsConsulting\\BcErrorPagesBundle": ""
         }
     },
     "extra": {
-        "symfony-assets-install": "relative",
+        "symfony-assets-install": "relative"
     },
-    "post-install-cmd": [
-        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-        "BrookinsConsulting\\BcErrorPagesBundle\\Composer\\ScriptHandler::installErrorPagesInApp",
-        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
-    ],
+    "scripts": {
+        "build": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "BrookinsConsulting\\BcErrorPagesBundle\\Composer\\ScriptHandler::installErrorPagesInApp",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+        ],
+        "post-install-cmd": [
+            "@build"
+        ],
+        "post-update-cmd": [
+            "@build"
+        ]
+    },
     "target-dir" : "BrookinsConsulting/BcErrorPagesBundle"
 }
