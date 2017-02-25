@@ -29,7 +29,7 @@ class ScriptHandler extends ComposerScriptHandler {
             return;
         }
 
-        static::executeCommand($event, $consoleDir, 'bc:ep:install', $options['process-timeout']);
+        static::executeCommand($event, $consoleDir, 'bc:ep:install --relative', $options['process-timeout']);
     }
 
 }
