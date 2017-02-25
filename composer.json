@@ -1,0 +1,35 @@
+{
+    "name": "brookinsconsulting/bcerrorpagesbundle",
+    "description": "BC Error Pages Bundle for Symfony 3. Provides a basic solution to override the default Symfony error pages template code and styles with designer friendly alternatives. Great for developers seeking to override default error pages in Symfony.",
+    "type" : "library",
+    "keywords" : [ "Symfony", "error", "pages", "templates", "customize" ],
+    "homepage": "https://gitlab.com/brookinsconsulting/bcerrorpagesbundle",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name" : "Brookins Consulting",
+            "email": "info@brookinsconsulting.com",
+            "role": "Author"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.0",
+        "symfony/symfony": "3.2.*",
+        "symfony/filesystem": "*"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "BrookinsConsulting\\BcErrorPagesBundle" : ""
+        }
+    },
+    "extra": {
+        "symfony-assets-install": "relative",
+    },
+    "post-install-cmd": [
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+        "BrookinsConsulting\\BcErrorPagesBundle\\Composer\\ScriptHandler::installErrorPagesInApp",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+    ],
+    "target-dir" : "BrookinsConsulting/BcErrorPagesBundle"
+}

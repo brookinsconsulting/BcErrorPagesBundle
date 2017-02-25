@@ -1,0 +1,18 @@
+{% extends 'TwigBundle:layout:base.html.twig' %}
+
+{% block body %}
+    <h1>Page not found</h1>
+    <h2>Oops! An Error Occurred</h2>
+    <h3>The server returned a "{{ status_code }} {{ status_text }}".</h3>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {# ... #}
+    {% endif %}
+
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
+    </p>
+    <p>Something may be broken. Please let us know what you were doing when this error occurred.</p>
+    <p>We will fix it as soon as possible. Sorry for any inconvenience caused.</p>
+{% endblock %}

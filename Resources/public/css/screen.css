@@ -1,0 +1,41 @@
+body {
+	background-color: #fff;
+	color: #000;
+	font-family: sans-serif;
+	font-size: 10pt;
+	width: 600px;
+}
+
+img {
+	border: 0;
+}
+
+p {
+	line-height: 1.4em;
+}
+
+body#home {
+	text-align: center;
+	width: auto;
+}
+
+div#logo {
+	background-image: url(/bundles/bcerrorpages/images/logo/brookinsconsulting.png);
+	background-position: center top;
+	background-repeat: no-repeat;
+	height: 274px;
+	margin-top: 100px;
+	width: 100%;
+}
+
+div#searchform {
+	padding: 0 0 0.5em;
+}
+
+.hidden {
+	display: none;
+}
+
+.small {
+	font-size: 0.8em;
+}

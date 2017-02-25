@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta charset="{{ _charset }}" />
+    <title>Brookins Consulting : {% block title %}An Error Occurred: {{ status_text }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('bundles/bcerrorpages/css/screen.css') }}" type="text/css" media="screen" />
+</head>
+<body id="home">
+
+{% block shield %}
+<div id="logo">
+    <h1 class="hidden">Brookins Consulting</h1>
+</div>
+
+<div id="searchform">
+    <p>Brookins Consulting</p>
+</div>
+
+<div id="content">
+    {% block body %}{% endblock %}
+</div>
+
+<p class="small">
+    <a href="//brookinsconsulting.com/About">About Brookins Consulting</a> - <a href="//brookinsconsulting.com">Go to brookinsconsulting.com!</a>
+</p>
+{% endblock %}
+
+</body>
+</html>
