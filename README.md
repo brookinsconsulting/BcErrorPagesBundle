@@ -100,11 +100,24 @@ This solution was created to provide for a simple basis to customize ugly yet in
 Installation
 ============
 
-### Bundle Installation via Composer
+### Bundle post install/update command script installation
 
-Run the following command from your project root to install the bundle:
+Within your project's / website's root composer.json file add the following composer scripts block to provide for automatic error page template and assets installation.
 
-    bash$ composer require brookinsconsulting/bcerrorpagesbundle dev-master;
+    "scripts": {
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "BrookinsConsulting\\BcErrorPagesBundle\\Composer\\ScriptHandler::installErrorPagesInApp",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
 
 ### Bundle Activation
 
@@ -113,12 +126,26 @@ Within file `app/AppKernel.php` method `registerBundles` add the following into 
     // Brookins Consulting : BcErrorPagesBundle Requirements
     new BrookinsConsulting\BcErrorPagesBundle\BcErrorPagesBundle()
 
+Install the above before installing the bundle via composer to ensure that the automatic error page template and assets installation scripts function as designed.
+
+### Bundle Installation via Composer
+
+Run the following command from your project root to install the bundle:
+
+    bash$ composer require brookinsconsulting/bcerrorpagesbundle dev-master;
+
 ### Dev Env Route Installation (Optional)
 
-Edit your ```app/config/routing.yml``` file and add the following code to import this bundle's routes
+Edit your ```app/config/routing.yml``` file and add the following code to import this bundle's routes. Note that this step is optional and only required if you desire to test the error pages manually.
 
     app_bcerrorpages:
         resource: "@BcErrorPagesBundle/Resources/config/routing_dev.yml"
+
+### Template Installation
+
+Required only if not installed via composer
+
+    php bin/console bc:ep:install --relative
 
 ### Asset Installation
 
@@ -140,6 +167,7 @@ Template Customization
 
 If you need to customize the provided templates remember to do so within the bundle resources itself.
 
+If needed you may find making a fork or variation based on this bundle suits your needs for further template customization.
 
 Usage
 =====
